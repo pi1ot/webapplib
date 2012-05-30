@@ -1,0 +1,77 @@
+# /// \file Makefile.example
+# /// WebAppLib example Makefile 
+
+################################################################################
+# 使用 WebAppLib Makefile 范例
+
+# 使用 make -f Makefile.example 命令编译生成执行文件；
+# 使用 make -f Makefile.example clean 命令清除编译结果及临时文件.
+
+# 如果需要使用静态链接方式，可以将将本 Makefile 中的 -lwebapp
+# 参数改为静态库 libwebapp.a 文件绝对路径.
+
+################################################################################
+# 以下部分根据实际情况修改
+
+# 执行文件列表
+EXES = example
+# 若安装 WebAppLib 时未编译 MysqlClient，则注释 MYSQL 变量
+MYSQL = yes
+
+# WEB开发库头文件目录
+INCPATH = -I/usr/local/include/webapplib
+# WEB开发库安装目录
+LIBPATH = /usr/local/lib
+# MySQL 头文件路径
+MYSQLINC = -I/usr/include/mysql
+# MySQL 库文件路径及链接参数
+MYSQLLIB = -L/usr/lib/mysql -lmysqlclient -lm -lz
+
+################################################################################
+# 以下部分一般不需更改
+
+# C++ 编译器命令
+CXX = g++
+
+# 编译选项
+CXXFLAGS = -Wall -O2 -g
+# -Wall 显示所有警告信息
+# -O2 编译优化
+# -g 生成调试信息
+
+# 是否编译MysqlClient组件
+ifndef MYSQL
+CXXFLAGS += -D_WEBAPPLIB_NOMYSQL
+MYSQLINC :=
+MYSQLLIB :=
+endif
+
+# 链接开发库文件参数
+WEBAPP = -L$(LIBPATH) -lwebapp
+# 若使用静态库则需替换为
+#WEBAPP = $(LIBPATH)/libwebapp.a
+
+# 取得操作系统描述，SunOS、FreeBSD...
+OS = `uname`
+# Solaris 操作系统编译参数
+SOLARIS = -lnsl -lsocket -lresolv
+
+################################################################################
+# 编译目标
+all: $(EXES)
+
+# 编译范例执行文件
+$(EXES): $(@:%=%.cpp)
+	@echo ""
+	@echo "Build $@ ..."
+	if [ $(OS) = 'SunOS' ]; then \
+		$(CXX) $(CXXFLAGS) $(INCPATH) $(MYSQLINC) -o $@ $(@:%=%.cpp) $(WEBAPP) $(MYSQLLIB) $(SOLARIS); \
+	else \
+		$(CXX) $(CXXFLAGS) $(INCPATH) $(MYSQLINC) -o $@ $(@:%=%.cpp) $(WEBAPP) $(MYSQLLIB); \
+	fi;
+
+################################################################################
+# 清空编译结果
+clean:
+	rm -f $(EXES)
+
