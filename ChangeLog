@@ -1,0 +1,6 @@
+2012-8-3
+	waUtility 函数库增加 replace_text() 函数
+	增加 CMakeLists.txt 文件，支持 CMake 工具
+	增加 INSTALL 安装说明文件
+	增加 ChangeLog 变更说明文件
+	库版本号升级为 1.1，与 1.0 版接口兼容

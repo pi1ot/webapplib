@@ -1,0 +1,15 @@
+运行 “make; make install” 将安装库文件到 /usr/local/lib，
+安装头文件到 /usr/local/include/webapplib，
+若运行环境无 MySQL 相关头文件和库文件，或者不需要编译 MysqlClient 组件，
+可以修改 Makefile 注释掉 MYSQL 变量，
+在自己的程序中使用该库，Makefile 写法可参考 Makefile.example。
+
+或者如果你的系统安装有 CMake 的话，可以：
+
+进入 build 子目录，运行 “cmake ..”，将使用 CMake 自动检测 MySQL 安装路径并生成 Makefile，
+然后再运行 “make; make install”，若需要定制安装路径，
+可以运行“cmake -DCMAKE_INSTALL_PREFIX=/path/up/to/you ..”
+若安装后需要删除，可以查看生成的 install_manifest.txt 文件内容，并删除其中所列文件。
+	
+以上安装过程在 Linux（CentOS）与 Cygwin 环境测试通过，
+使用 CMake 方式编译应该可以支持更多系统平台。
