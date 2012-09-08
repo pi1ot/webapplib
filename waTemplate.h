@@ -96,7 +96,7 @@ class Template {
 	private:
 	
 	/// 读取指定位置的模板脚本类型及表达式
-	int parse_script( const string &tmpl, const unsigned int pos,
+	int parse_script( const string &tmpl, const size_t pos,
 		string &exp, int &type );
 
 	/// 分析表达式的值

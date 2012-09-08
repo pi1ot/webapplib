@@ -190,7 +190,7 @@ void HttpClient::parse_url( const string &urlstr, string &parsed_host, string &p
 	}
 
 	// parse hostname and url
-	unsigned int pos;
+	size_t pos;
 	parsed_host = "";
 	parsed_url = url;
 	if ( strncasecmp(url.c_str(),"HTTP://",7) == 0 ) {
@@ -367,7 +367,7 @@ void HttpClient::parse_response( const string &response ) {
 	_gets.clear();
 
 	// split header and body
-	unsigned int pos;
+	size_t pos;
 	String head;
 	String body;
 	if ( (pos=response.find(DOUBLE_CRLF)) != response.npos ) {
@@ -391,7 +391,7 @@ void HttpClient::parse_response( const string &response ) {
 		status.trim();
 		_gets["HTTP_STATUS"] = status;
 		if ( strncmp(status.c_str(),"HTTP/",5) == 0 ) {
-			unsigned int b1, b2;
+			size_t b1, b2;
 			if ( (b1=status.find(" "))!=status.npos
 				 && (b2=status.find(" ",b1+1))!=status.npos )
 				_status = status.substr( b1+1, b2-b1-1 );
@@ -405,7 +405,7 @@ void HttpClient::parse_response( const string &response ) {
 	// parse header
 	String line, name, value;
 	vector<String> hds = head.split( "\n" );
-	for ( unsigned int i=0; i<hds.size(); ++i ) {
+	for ( size_t i=0; i<hds.size(); ++i ) {
 		line = hds[i];
 		line.trim();
 		
@@ -465,7 +465,7 @@ string HttpClient::dump_header() {
 			if ( (i->second).find("\n") != (i->second).npos ) {
 				headers = i->second;
 				headerlist = headers.split( "\n" );
-				for ( unsigned j=0; j<headerlist.size(); ++j )
+				for ( size_t j=0; j<headerlist.size(); ++j )
 					header += i->first + ": " + headerlist[j] + "\n";
 			} else {
 				header += i->first + ": " + i->second + "\n";
@@ -505,7 +505,7 @@ void HttpClient::clear() {
 /// \return ·µ»Ø½âÂë×Ö·û´®
 string HttpClient::parse_chunked( const string &chunkedstr ) {
 	char crlf[3] = "\x0D\x0A";
-	unsigned int pos, lastpos;
+	size_t pos, lastpos;
 	int size = 0;
 	string hexstr;
 

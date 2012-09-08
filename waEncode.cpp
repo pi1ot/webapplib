@@ -41,11 +41,10 @@ string uri_encode( const string &source ) {
 	const char unsafe[] = " \"#%<>\0";
 	const char other[] = "'`[],~!$^(){}|\\\r\n";
 
-	char element[3];
-	char chr;
+	char chr, element[4]={0};
 	string res;
 	res.reserve( source.length()*3 );
-	
+
 	for ( size_t i=0; i<source.length(); ++i ) {
 		chr = source[i];
 		if ( strchr(reserved,chr) || strchr(unsafe,chr) || strchr(other,chr) ) {

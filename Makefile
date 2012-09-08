@@ -15,7 +15,8 @@
 
 ################################################################################
 # 当前WEB开发库版本号 $(WEBAPPLIB_VERSION)
-WEBAPPLIB_VERSION = 1.0
+WEBAPPLIB_VERSION = 1.1
+WEBAPPLIB_SONAME = 1
 
 # C++ 编译器命令
 CXX = g++
@@ -63,6 +64,7 @@ WEBAPPINC = webapplib.h $(OBJS:%.o=%.h)
 WEBAPPLIB = libwebapp.a.$(WEBAPPLIB_VERSION)
 # 开发库动态链接库文件名
 WEBAPPDLL = libwebapp.so.$(WEBAPPLIB_VERSION)
+WEBAPPSO = libwebapp.so.$(WEBAPPLIB_SONAME)
 
 ################################################################################
 # 编译目标
@@ -84,7 +86,7 @@ $(WEBAPPLIB): $(OBJS)
 $(WEBAPPDLL): $(OBJS)
 	@echo ""
 	@echo "Build $(WEBAPPDLL) ..."
-	$(CXX) $(CXXFLAGS) -shared -o $@ $(OBJS)
+	$(CXX) $(CXXFLAGS) -shared -Wl,-soname,$(WEBAPPSO) -o $@ $(OBJS)
 	@echo ""
 	@echo "Type \"make install\" to install webapplib"
 	@echo "Type \"make uninstall\" to uninstall webapplib"

@@ -109,7 +109,7 @@ long file_time( const string &file ) {
 /// \param file 文件路径名
 /// \return 若能取得文件路径则返回,否则返回空字符串
 string file_path( const string &file ) {
-	unsigned int p;
+	size_t p;
 	if ( (p=file.rfind("/")) != file.npos )
 		return file.substr( 0, p );
 	else if ( (p=file.rfind("\\")) != file.npos )
@@ -123,7 +123,7 @@ string file_path( const string &file ) {
 /// \param file 文件路径名
 /// \return 若能取得文件名称则返回,否则返回原文件路径名称
 string file_name( const string &file ) {
-	unsigned int p;
+	size_t p;
 	if ( (p=file.rfind("/")) != file.npos )
 		return file.substr( p+1 );
 	else if ( (p=file.rfind("\\")) != file.npos )
@@ -164,7 +164,7 @@ bool copy_file( const string &srcfile, const string &destfile ) {
 	
 	const int bufsize = 8192;
 	char buf[bufsize];
-	unsigned int n;
+	size_t n;
 	while ( (n=fread(buf,1,bufsize,src)) >= 1 ) {
 		if ( fwrite(buf,1,n,dest) != n ) {
 			fclose( src );
@@ -245,7 +245,7 @@ vector<string> dir_files( const string &dir ) {
 }
 
 /// \ingroup waFileSystem
-/// \fn bool make_dir( const string &dir, const unsigned int mode )
+/// \fn bool make_dir( const string &dir, const size_t mode )
 /// 建立目录
 /// \param dir 要创建的目录,若上层目录不存在则自动创建
 /// \param mode 创建目录权限,默认为S_IRWXU|S_IRGRP|S_IXGRP|S_IROTH|S_IXOTH(0755)
@@ -296,7 +296,7 @@ bool copy_dir( const string &srcdir, const string &destdir ) {
 	if ( !file_exist(destdir) )
 		make_dir( destdir );
 	
-	for ( unsigned int i=0; i<files.size(); ++i ) {
+	for ( size_t i=0; i<files.size(); ++i ) {
 		from = srcdir + "/" + files[i];
 		to = destdir + "/" + files[i];
 		
@@ -325,7 +325,7 @@ bool delete_dir( const string &dir ) {
 	string todel;
 	
 	// 删除文件
-	for ( unsigned int i=0; i<files.size(); ++i ) {
+	for ( size_t i=0; i<files.size(); ++i ) {
 		todel = dir + "/" + files[i];
 		
 		// 子目录,递归调用

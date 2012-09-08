@@ -117,7 +117,7 @@ class HttpClient {
 	}
 	/// 获取HTTP返回Content正文长度(Content-Length)
 	/// \return HTTP返回Content正文长度
-	inline unsigned int content_length() const {
+	inline size_t content_length() const {
 		return _content.length();
 	}
 	

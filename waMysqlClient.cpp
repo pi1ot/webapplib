@@ -40,7 +40,7 @@ MysqlData::~MysqlData() {
 /// \param row 数据行位置,默认为0
 /// \param col 数据列位置,默认为0
 /// \return 返回数据,不存在则返回空字符串
-string MysqlData::get_data( const unsigned long row, const unsigned int col ) {
+string MysqlData::get_data( const size_t row, const size_t col ) {
 	if( _mysqlres!=NULL && row<_rows && col<_cols ) {
 		if ( static_cast<long>(row) != _fetched ) {
 			if ( row != _curpos+1 )
@@ -61,7 +61,7 @@ string MysqlData::get_data( const unsigned long row, const unsigned int col ) {
 /// \param row 行位置
 /// \param field 字段名
 /// \return 数据字符串,不存在返回空字符串
-string MysqlData::get_data( const unsigned long row, const string &field ) {
+string MysqlData::get_data( const size_t row, const string &field ) {
 	int col = this->field_pos( field );
 	if ( col != -1 )
 		return this->get_data( row, col );
@@ -76,7 +76,7 @@ string MysqlData::get_data( const unsigned long row, const string &field ) {
 MysqlDataRow MysqlData::get_row( const long row ) {
 	MysqlDataRow datarow;
 	string field;
-	unsigned long rowpos;
+	size_t rowpos;
 	
 	if ( row < 0 ) 
 		rowpos = _curpos;
@@ -158,7 +158,7 @@ int MysqlData::field_pos( const string &field ) {
 /// 返回字段名称
 /// \param col 字段位置
 /// \return 若数据结果中存在该字段则返回字段名称,否则返回空字符串
-string MysqlData::field_name( unsigned int col ) const {
+string MysqlData::field_name( size_t col ) const {
 	if ( _mysqlfields!=0 && col<=_cols )
 		return string( _mysqlfields[col].name );
 	else
@@ -254,8 +254,8 @@ bool MysqlClient::query( const string &sqlstr ) {
 /// \param row 数据行位置,默认为0
 /// \param col 数据列位置,默认为0
 /// \return 查询成功返回字符串,否则返回空字符串
-string MysqlClient::query_val( const string &sqlstr, const unsigned long row, 
-	const unsigned int col ) 
+string MysqlClient::query_val( const string &sqlstr, const size_t row, 
+	const size_t col ) 
 {
 	MysqlData data;
 	if ( this->query(sqlstr,data) ) {
@@ -269,7 +269,7 @@ string MysqlClient::query_val( const string &sqlstr, const unsigned long row,
 /// \param sqlstr SQL查询字符串
 /// \param row 数据行位置,默认为0
 /// \return 返回值类型为MysqlDataRow,即map<string,string>
-MysqlDataRow MysqlClient::query_row( const string &sqlstr, const unsigned long row ) {
+MysqlDataRow MysqlClient::query_row( const string &sqlstr, const size_t row ) {
     MysqlData data;
     MysqlDataRow datarow;
     if ( this->query(sqlstr,data) ) {
@@ -281,8 +281,8 @@ MysqlDataRow MysqlClient::query_row( const string &sqlstr, const unsigned long r
 }
 
 /// 上次查询动作所影响的记录条数
-/// \return 返回记录条数,类型unsigned long
-unsigned long MysqlClient::affected() {
+/// \return 返回记录条数,类型size_t
+size_t MysqlClient::affected() {
 	if ( _connected )
 		return mysql_affected_rows( &_mysql );
 	else
@@ -292,7 +292,7 @@ unsigned long MysqlClient::affected() {
 /// 取得上次查询的一个AUTO_INCREMENT列生成的ID
 /// 一个Mysql表只能有一个AUTO_INCREMENT列,且必须为索引
 /// \return 返回生成的ID
-unsigned long MysqlClient::last_id() {
+size_t MysqlClient::last_id() {
 	if ( _connected )
 		return mysql_insert_id( &_mysql );
 	else

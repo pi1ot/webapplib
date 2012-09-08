@@ -33,12 +33,6 @@
 
 #include "waString.h"
 #include "waCgi.h"
-
-// 编译时使用 -D_WEBAPPLIB_NOMYSQL 参数则不包含 MysqlCleint 模块
-#ifndef _WEBAPPLIB_NOMYSQL
-#include "waMysqlClient.h"
-#endif
-
 #include "waDateTime.h"
 #include "waTemplate.h"
 #include "waHttpClient.h"
@@ -47,6 +41,11 @@
 #include "waUtility.h"
 #include "waTextFile.h"
 #include "waConfigFile.h"
+
+// 编译时使用 -D_WEBAPPLIB_NOMYSQL 参数则不包含 MysqlCleint 模块
+#ifndef _WEBAPPLIB_NOMYSQL
+#include "waMysqlClient.h"
+#endif
 
 #endif //_WEBAPPLIB_H_ 
 

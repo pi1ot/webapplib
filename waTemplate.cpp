@@ -582,7 +582,7 @@ bool Template::check_if( const string &exp ) {
 	// judge
 	if ( exp_type == TMPL_L_AND ) {
 		// TMPL_AND
-		for ( unsigned int i=0; i<explist.size(); i++ ) {
+		for ( size_t i=0; i<explist.size(); i++ ) {
 			explist[i].trim();
 			if ( !this->compare(explist[i]) )
 				return false;

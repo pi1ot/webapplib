@@ -37,9 +37,7 @@ class MysqlData {
 	/// 填充MysqlData数据
 	bool fill_data( MYSQL *mysql );
 	
-	unsigned long _rows;
-	unsigned int _cols;
-	unsigned long _curpos;
+	size_t _rows, _cols, _curpos;
 	long _fetched;
 
 	MYSQL_RES *_mysqlres;
@@ -63,38 +61,38 @@ class MysqlData {
 	/// \param row 行位置
 	/// \param col 列位置
 	/// \return 数据字符串
-	inline string operator() ( const unsigned long row, const unsigned int col ) {
+	inline string operator() ( const size_t row, const size_t col ) {
 		return this->get_data( row, col );
 	}
 	/// 返回指定位置的MysqlData数据
-	string get_data( const unsigned long row, const unsigned int col );
+	string get_data( const size_t row, const size_t col );
 
 	/// 返回指定字段的MysqlData数据
 	/// \param row 行位置
 	/// \param field 字段名
 	/// \return 数据字符串
-	inline string operator() ( const unsigned long row, const string &field ) {
+	inline string operator() ( const size_t row, const string &field ) {
 		return this->get_data( row, field );
 	}
 	/// 返回指定字段的MysqlData数据
-	string get_data( const unsigned long row, const string &field );
+	string get_data( const size_t row, const string &field );
 
 	/// 返回指定位置的MysqlData数据行
 	MysqlDataRow get_row( const long row = -1 );
 
 	/// 返回MysqlData数据行数
-	inline unsigned long rows() const {
+	inline size_t rows() const {
 		return _rows;
 	}
 	/// 返回MysqlData数据列数
-	inline unsigned int cols() const {
+	inline size_t cols() const {
 		return _cols;
 	}
 	
 	/// 返回字段位置
 	int field_pos( const string &field );
 	/// 返回字段名称
-	string field_name( const unsigned int col ) const;
+	string field_name( const size_t col ) const;
 
 	////////////////////////////////////////////////////////////////////////////
 	private:
@@ -147,16 +145,18 @@ class MysqlClient {
 	bool query( const string &sqlstr, MysqlData &records );
 	/// 执行SQL语句
 	bool query( const string &sqlstr );
+	
 	/// 返回查询结果中指定位置的字符串值
 	string query_val( const string &sqlstr, 
-		const unsigned long row = 0, const unsigned int col = 0 );
-    /// 返回查询结果中指定行
-    MysqlDataRow query_row( const string &sqlstr, const unsigned long row = 0 );
+		const size_t row = 0, const size_t col = 0 );
+	
+    	/// 返回查询结果中指定行
+    	MysqlDataRow query_row( const string &sqlstr, const size_t row = 0 );
 
 	/// 上次查询动作所影响的记录条数
-	unsigned long affected();
+	size_t affected();
 	/// 取得上次查询的一个AUTO_INCREMENT列生成的ID
-	unsigned long last_id();
+	size_t last_id();
 	
 	/// 取得Mysql错误信息
 	/// \return 返回错误信息字符串
@@ -165,7 +165,7 @@ class MysqlClient {
 	}
 	/// 取得Mysql错误编号
 	/// \return 返回错误信息编号
-	inline unsigned int errnum() {
+	inline size_t errnum() {
 		return mysql_errno( &_mysql );
 	}
 
