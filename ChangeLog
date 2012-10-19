@@ -1,3 +1,7 @@
+2012-10-18
+	CMakeLists.txt 遗漏 waCgi 已修复
+	库版本号不变
+
 2012-8-12
 	为支持 64 位系统所有 unsigned int 变量都修改为 size_t
 	在 MacOSX 系统编译测试通过 (使用 cmake)

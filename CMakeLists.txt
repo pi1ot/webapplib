@@ -5,11 +5,11 @@ SET( CMAKE_CXX_FLAGS_RELEASE "-Wall -O2 -fPIC" )
 SET( CMAKE_INSTALL_PREFIX /usr/local )
 
 # source files
-SET( WEBAPPLIB_SRCS waString.cpp waFileSystem.cpp waTemplate.cpp 
+SET( WEBAPPLIB_SRCS waString.cpp waCgi.cpp waFileSystem.cpp waTemplate.cpp 
     waHttpClient.cpp waEncode.cpp waDateTime.cpp waTextFile.cpp 
     waConfigFile.cpp waUtility.cpp )
 # header files    
-SET( WEBAPPLIB_INCS waString.h waFileSystem.h waTemplate.h 
+SET( WEBAPPLIB_INCS waString.h waCgi.h waFileSystem.h waTemplate.h 
     waHttpClient.h waEncode.h waDateTime.h waTextFile.h 
     waConfigFile.h waUtility.h webapplib.h )
 
