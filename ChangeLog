@@ -1,3 +1,7 @@
+2012-11-24
+	清理 waMysqlClient 内部实现
+	库版本号升级为 1.2
+
 2012-10-18
 	CMakeLists.txt 遗漏 waCgi 已修复
 	库版本号不变

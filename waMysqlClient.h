@@ -38,7 +38,7 @@ class MysqlData {
 	bool fill_data( MYSQL *mysql );
 	
 	size_t _rows, _cols, _curpos;
-	long _fetched;
+	size_t _fetched;
 
 	MYSQL_RES *_mysqlres;
 	MYSQL_ROW _mysqlrow;
@@ -50,7 +50,7 @@ class MysqlData {
 
 	/// MysqlData构造函数
 	MysqlData():
-	_rows(0), _cols(0), _curpos(0), _fetched(-1),
+	_rows(0), _cols(0), _curpos(0), _fetched(0),
 	_mysqlres(0), _mysqlfields(0)
 	{};
 	
@@ -78,7 +78,7 @@ class MysqlData {
 	string get_data( const size_t row, const string &field );
 
 	/// 返回指定位置的MysqlData数据行
-	MysqlDataRow get_row( const long row = -1 );
+	MysqlDataRow get_row( const size_t row = 0 );
 
 	/// 返回MysqlData数据行数
 	inline size_t rows() const {
@@ -150,8 +150,8 @@ class MysqlClient {
 	string query_val( const string &sqlstr, 
 		const size_t row = 0, const size_t col = 0 );
 	
-    	/// 返回查询结果中指定行
-    	MysqlDataRow query_row( const string &sqlstr, const size_t row = 0 );
+	/// 返回查询结果中指定行
+	MysqlDataRow query_row( const string &sqlstr, const size_t row = 0 );
 
 	/// 上次查询动作所影响的记录条数
 	size_t affected();

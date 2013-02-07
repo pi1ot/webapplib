@@ -76,11 +76,11 @@ bool make_link( const string &srcfile, const string &destfile ) {
 }
 
 /// \ingroup waFileSystem
-/// \fn long file_size( const string &file )
+/// \fn size_t file_size( const string &file )
 /// 取得文件大小
 /// \param file 文件路径名
 /// \return 若文件存在则返回大小,否则返回-1
-long file_size( const string &file ) {
+size_t file_size( const string &file ) {
 	struct stat statbuf;
 	
 	if( stat(file.c_str(),&statbuf)==0 )
@@ -90,11 +90,11 @@ long file_size( const string &file ) {
 }
 
 /// \ingroup waFileSystem
-/// \fn long file_time( const string &file )
+/// \fn time_t file_time( const string &file )
 /// 取得文件更改时间
 /// \param file 文件路径名
 /// \return 若文件存在则返回其最后更改时间,否则返回-1
-long file_time( const string &file ) {
+time_t file_time( const string &file ) {
 	struct stat statbuf;
 	
 	if( stat(file.c_str(),&statbuf)==0 )

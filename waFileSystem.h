@@ -28,9 +28,9 @@ bool is_dir( const string &file );
 bool make_link( const string &srcfile, const string &destfile );
 
 /// 取得文件大小
-long file_size( const string &file );
+size_t file_size( const string &file );
 /// 取得文件更改时间
-long file_time( const string &file );
+time_t file_time( const string &file );
 /// 取得文件路径
 string file_path( const string &file );
 /// 取得文件名称

@@ -33,7 +33,7 @@ class Cgi {
 	public:
 
 	/// 构造函数
-	Cgi( const long formdata_maxsize = 0 );
+	Cgi( const size_t formdata_maxsize = 0 );
 	
 	/// 析构函数
 	virtual ~Cgi(){};

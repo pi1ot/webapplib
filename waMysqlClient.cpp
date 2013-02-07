@@ -42,11 +42,12 @@ MysqlData::~MysqlData() {
 /// \return 返回数据,不存在则返回空字符串
 string MysqlData::get_data( const size_t row, const size_t col ) {
 	if( _mysqlres!=NULL && row<_rows && col<_cols ) {
-		if ( static_cast<long>(row) != _fetched ) {
-			if ( row != _curpos+1 )
+		if ( row != _fetched ) {
+			if ( row != _curpos+1 ) {
 				mysql_data_seek( _mysqlres, row );
+			}
 			_mysqlrow = mysql_fetch_row( _mysqlres );
-			_fetched = static_cast<long>( row ); 
+			_fetched = row; 
 		}
 		
 		if ( _mysqlrow!=NULL && _mysqlrow[col]!=NULL ) {
@@ -70,32 +71,27 @@ string MysqlData::get_data( const size_t row, const string &field ) {
 }
 
 /// 返回指定位置的MysqlData数据行
-/// \param row 数据行位置,默认为当前纪录位置,
-/// 当前纪录位置由first(),prior(),next(),last(),find()函数操纵,默认为0
+/// \param row 数据行位置,默认为0即第一行
 /// \return 返回值类型为MysqlDataRow,即map<string,string>
-MysqlDataRow MysqlData::get_row( const long row ) {
+MysqlDataRow MysqlData::get_row( const size_t row ) {
 	MysqlDataRow datarow;
 	string field;
-	size_t rowpos;
-	
-	if ( row < 0 ) 
-		rowpos = _curpos;
-	else
-		rowpos = row;
 		
-	if( _mysqlres!=NULL && rowpos<_rows ) {
-		if ( rowpos != _curpos ) {
-			if ( rowpos != _curpos+1 )
-				mysql_data_seek( _mysqlres, rowpos );
+	if( _mysqlres!=NULL && row<_rows ) {
+		if ( row != _curpos ) {
+			if ( row != _curpos+1 ) {
+				mysql_data_seek( _mysqlres, row );
+			}
 			_mysqlrow = mysql_fetch_row( _mysqlres );
 		}
 		
 		if ( _mysqlrow != NULL ) {
-			_curpos = rowpos; // log current cursor
+			_curpos = row; // log current cursor
 			for ( size_t i=0; i<_cols; ++i ) {
 				field = this->field_name( i );
-				if ( field!="" && _mysqlrow[i]!=NULL )
+				if ( field!="" && _mysqlrow[i]!=NULL ) {
 					datarow.insert( MysqlDataRow::value_type(field,_mysqlrow[i]) );
+				}
 			}
 		}
 	}
@@ -127,7 +123,8 @@ bool MysqlData::fill_data( MYSQL *mysql ) {
 		
 		// init first data
 		mysql_data_seek( _mysqlres, 0 );
-		_mysqlrow = mysql_fetch_row( _mysqlres );		
+		_mysqlrow = mysql_fetch_row( _mysqlres );
+		_fetched = 0;		
 		
 		return true;
 	}
@@ -184,8 +181,7 @@ bool MysqlClient::connect( const string &host, const string &user, const string 
 	
 	if ( mysql_init(&_mysql) ) {
 		if ( mysql_real_connect( &_mysql, host.c_str(), user.c_str(),
-								 pwd.c_str(), database.c_str(),
-								 port, socket, CLIENT_COMPRESS ) )
+			pwd.c_str(), database.c_str(), port, socket, CLIENT_COMPRESS ) )
 			_connected = true;
 	}
 	

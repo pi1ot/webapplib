@@ -116,15 +116,15 @@ class DateTime {
 	inline int sec() const {return _tm.tm_sec;}
 	
 	/// 返回 1970-1-1 0:0:0 以来的秒数
-	inline long secs() const {return _time;}
+	inline time_t secs() const {return _time;}
 	/// 返回 1970-1-1 0:0:0 以来的分钟数
-	inline long mins() const {return ( _time/TIME_ONE_MIN );}
+	inline time_t mins() const {return ( _time/TIME_ONE_MIN );}
 	/// 返回 1970-1-1 0:0:0 以来的小时数
-	inline long hours() const {return ( _time/TIME_ONE_HOUR );}
+	inline time_t hours() const {return ( _time/TIME_ONE_HOUR );}
 	/// 返回 1970-1-1 0:0:0 以来的天数
-	inline long days() const {return ( _time/TIME_ONE_DAY );}
+	inline time_t days() const {return ( _time/TIME_ONE_DAY );}
 	/// 返回 1970-1-1 0:0:0 以来的周数
-	inline long weeks() const {return ( _time/TIME_ONE_WEEK );}
+	inline time_t weeks() const {return ( _time/TIME_ONE_WEEK );}
 	
 	/// 以当前时间设置对象
 	void set();

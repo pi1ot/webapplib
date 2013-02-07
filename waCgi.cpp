@@ -48,7 +48,7 @@ string get_env( const string &envname ) {
 /// 读取并分析CGI内容
 /// \param formdata_maxsize 参数是"multipart/form-data"方式POST时的最大FORM上传数据大小,
 /// 超过部分被截断不处理,单位为byte,默认为0即不限制数据大小
-Cgi::Cgi( const long formdata_maxsize ) {
+Cgi::Cgi( const size_t formdata_maxsize ) {
 	// get envionment variable REQUEST_METHOD
 	_method = get_env( "REQUEST_METHOD" );
 	_method.upper();
@@ -91,7 +91,7 @@ Cgi::Cgi( const long formdata_maxsize ) {
 
 			if ( formdata_maxsize > 0 ) {
 				// max size set
-				long size = 0;
+				size_t size = 0;
 				
 				while ( cin ) {
 					cin >> c;

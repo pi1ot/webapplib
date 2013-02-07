@@ -15,7 +15,7 @@
 
 ################################################################################
 # 当前WEB开发库版本号 $(WEBAPPLIB_VERSION)
-WEBAPPLIB_VERSION = 1.1
+WEBAPPLIB_VERSION = 1.2
 WEBAPPLIB_SONAME = 1
 
 # C++ 编译器命令
@@ -105,8 +105,10 @@ install:
 	cp -f $(WEBAPPLIB) $(WEBAPPDLL) $(LIBPATH)
 	ln -fs $(LIBPATH)/$(WEBAPPLIB) $(LIBPATH)/libwebapp.a
 	ln -fs $(LIBPATH)/$(WEBAPPDLL) $(LIBPATH)/libwebapp.so
+	ln -fs $(LIBPATH)/$(WEBAPPDLL) $(LIBPATH)/$(WEBAPPSO)
 	ln -fs $(LIBPATH)/$(WEBAPPLIB) $(SYSLIB)/libwebapp.a
 	ln -fs $(LIBPATH)/$(WEBAPPDLL) $(SYSLIB)/libwebapp.so
+	ln -fs $(LIBPATH)/$(WEBAPPDLL) $(SYSLIB)/$(WEBAPPSO)
 
 # 执行删除
 uninstall:
