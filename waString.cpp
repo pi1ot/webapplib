@@ -494,7 +494,7 @@ bool String::load_file( const string &filename ) {
 	memset( buf, 0, bufsize+1 );
 	fread( buf, 1, bufsize, fp );
 	fclose( fp );
-	*this = buf;
+	*this = string( buf, bufsize );
 	delete[] buf;
 	return true;
 }
