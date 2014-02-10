@@ -218,7 +218,7 @@ void HttpClient::parse_url( const string &urlstr, string &parsed_host, string &p
 	parsed_port = 80;
 	if ( (pos=parsed_host.rfind(":")) != parsed_host.npos ) {
 		// hostname:post
-		parsed_port = stoi( parsed_host.substr(pos+1) );
+		parsed_port = webapp::stoi( parsed_host.substr(pos+1) );
 		parsed_host = parsed_host.substr( 0, pos );
 	}
 	
@@ -481,7 +481,7 @@ string HttpClient::dump_header() {
 /// \retval false Ê§°Ü
 bool HttpClient::done() const {
 	if ( _status.isnum() ) {
-		int ret = stoi( _status );
+		int ret = webapp::stoi( _status );
 		if ( ret>=100 && ret<300 )
 			return true;
 	}
