@@ -120,7 +120,8 @@ class MysqlClient {
 	/// \param port 数据库端口，默认为0
 	/// \param socket UNIX_SOCKET，默认为NULL
 	MysqlClient( const string &host, const string &user, const string &pwd, 
-		const string &database, const int port = 0, const char* socket = NULL ) 
+		const string &database, const int port = 0, const char* socket = NULL ):
+	_connected(false) 
 	{
 		this->connect( host, user, pwd, database, port, socket );
 	}
