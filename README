@@ -1,4 +1,4 @@
-<a href="https://996.icu"><img src="https://img.shields.io/badge/link-996.icu-red.svg"></a>
+[![996.ICU](src="https://img.shields.io/badge/link-996.icu-red.svg)](http://https://996.icu/)
 
 WebAppLib是一系列主要用于类Unix操作系统环境下WEB开发的C++类库。 设计目的是通过提供使用简单方便、相对独立的C++类和函数来简化CGI程序开发过程中的常见操作，提高开发效率，降低系统维护与改进的难度，适用于中等以上规模WEB系统开发
  
